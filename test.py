@@ -1,4 +1,4 @@
 from main import download
 
-def test_download():
-    download()
+def test_download(page):
+    assert download(page).failure() is not None

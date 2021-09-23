@@ -1,14 +1,8 @@
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import Playwright, sync_playwright
 from datetime import date
 
 
-def download() -> None:
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False)
-        context = browser.new_context(accept_downloads=True)
-    
-        # Open new page
-        page = context.new_page()
+def download(page: Playwright) -> Playwright:
     
         # Go to https://etf.dws.com/en-us/DBJP-msci-japan-hedged-equity-etf/
         page.goto("https://etf.dws.com/en-us/DBJP-msci-japan-hedged-equity-etf/")
@@ -26,19 +20,21 @@ def download() -> None:
     
         # Click text=Download Fund Holdings
         with page.expect_download() as download_info:
-            with page.expect_popup() as popup_info:
+            with page.expect_popup():
                 page.click("text=Download Fund Holdings")
-            page1 = popup_info.value
-        download = download_info.value
-        download.save_as(f'./fund_holdings_{date.today()}.xlsx')
-        download.delete()
-        # Close page
-        page1.close()
+        return download_info.value
+        
+        
+if __name__ == '__main__':
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=False)
+        context = browser.new_context(accept_downloads=True)
+        # Open new page
+        page = context.new_page()
+        file = download(page)
+        file.save_as(f'./fund_holdings_{date.today()}.xlsx')
+        file.delete()
     
         # ---------------------
         context.close()
         browser.close()
-        
-        
-if __name__ == '__main__':
-    download()
