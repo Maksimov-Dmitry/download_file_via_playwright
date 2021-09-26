@@ -1,6 +1,6 @@
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, Page, Download
 from datetime import date
-from playwright.sync_api._generated import Page, Download
+
 
 def download(page: Page) -> Download:
     

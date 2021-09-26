@@ -1,4 +1,3 @@
-from main import download
 import pytest
 
 @pytest.fixture(scope="session")
@@ -14,7 +13,3 @@ def browser_context_args(browser_context_args):
         **browser_context_args,
         "accept_downloads": True
     }
-
-
-def test_download(page):
-    assert download(page).failure() is None
