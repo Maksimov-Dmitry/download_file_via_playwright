@@ -1,8 +1,8 @@
-from playwright.sync_api import Playwright, sync_playwright
+from playwright.sync_api import sync_playwright
 from datetime import date
+from playwright.sync_api._generated import Page, Download
 
-
-def download(page: Playwright) -> Playwright:
+def download(page: Page) -> Download:
     
         # Go to https://etf.dws.com/en-us/DBJP-msci-japan-hedged-equity-etf/
         page.goto("https://etf.dws.com/en-us/DBJP-msci-japan-hedged-equity-etf/")
