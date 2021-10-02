@@ -1,4 +1,4 @@
-from main import download
+from src.main import download
 
 def test_func_download(page):
     """
