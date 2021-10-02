@@ -27,7 +27,7 @@ def download(page: Page) -> Download:
         
 if __name__ == '__main__':
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False)
+        browser = playwright.chromium.launch(headless=True)
         context = browser.new_context(accept_downloads=True)
         # Open new page
         page = context.new_page()
